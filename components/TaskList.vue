@@ -9,10 +9,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useTaskStore } from '~/stores/taskStore'
+import { defineProps, defineEmits } from 'vue'
+import { useTaskStoreWithLoad } from '~/stores/taskStore'
 
 const props = defineProps({
+  tasks: {
+    type: Array,
+    default: () => [],
+  },
   showDelete: {
     type: Boolean,
     default: false,
@@ -20,10 +24,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['task-deleted'])
-const taskStore = useTaskStore()
-const tasks = computed(() => taskStore.tasks)
+const store = useTaskStoreWithLoad()
 
+const updateTask = (task) => {
+  store.saveTasks()
+}
 const deleteTask = (taskId) => {
+  store.deleteTask(taskId)
   emit('task-deleted', taskId)
 }
 </script>

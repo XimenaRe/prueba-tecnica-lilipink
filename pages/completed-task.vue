@@ -1,7 +1,7 @@
 <template>
     <div class="p-4">
-      <h1 class="text-xl font-bold mb-4">Eliminar Tarea</h1>
-      <TaskList :showDelete="true" @task-deleted="handleTaskDeleted" />
+      <h1 class="text-xl font-bold mb-4">Tareas Completadas</h1>
+      <TaskList :showDelete="true" :tasks="completedTasks" @task-deleted="handleTaskDeleted" />
     </div>
   </template>
   
@@ -11,10 +11,9 @@
   import { useTaskStore } from '~/stores/taskStore'
   
   const taskStore = useTaskStore()
-  const tasks = computed(() => taskStore.tasks.filter(task => !task.completed))
+  const completedTasks = computed(() => taskStore.tasks.filter(task => task.completed))
   
   const handleTaskDeleted = (taskId) => {
     taskStore.deleteTask(taskId)
   }
   </script>
-  

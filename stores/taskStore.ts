@@ -19,13 +19,25 @@ export const useTaskStore = defineStore('task', {
       this.saveTasks()
     },
     saveTasks() {
-      localStorage.setItem('tasks', JSON.stringify(this.tasks))
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('tasks', JSON.stringify(this.tasks))
+      }
     },
     loadTasks() {
-      const savedTasks = localStorage.getItem('tasks')
-      if (savedTasks) {
-        this.tasks = JSON.parse(savedTasks)
+      if (typeof localStorage !== 'undefined') {
+        const savedTasks = localStorage.getItem('tasks')
+        if (savedTasks) {
+          this.tasks = JSON.parse(savedTasks)
+        }
       }
     },
   },
 })
+
+export function useTaskStoreWithLoad() {
+  const store = useTaskStore()
+  if (typeof window !== 'undefined') {
+    store.loadTasks()
+  }
+  return store
+}
