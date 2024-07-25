@@ -1,19 +1,18 @@
 <template>
     <div class="p-4">
-      <h1 class="text-xl font-bold mb-4">Lista de Tareas</h1>
-      <TaskList />
+      <h1 class="text-xl font-bold mb-4">Eliminar Tarea</h1>
+      <TaskList :showDelete="true" @task-deleted="handleTaskDeleted" />
     </div>
   </template>
   
   <script setup>
   import TaskList from '~/components/TaskList.vue'
-  import { onMounted } from 'vue'
   import { useTaskStore } from '~/stores/taskStore'
   
   const taskStore = useTaskStore()
   
-  onMounted(() => {
-    taskStore.loadTasks()
-  })
+  const handleTaskDeleted = (taskId) => {
+    taskStore.deleteTask(taskId)
+  }
   </script>
   

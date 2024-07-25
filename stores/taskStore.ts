@@ -14,6 +14,10 @@ export const useTaskStore = defineStore('task', {
       this.tasks.push(newTask)
       this.saveTasks()
     },
+    deleteTask(taskId: number) {
+      this.tasks = this.tasks.filter(task => task.id !== taskId)
+      this.saveTasks()
+    },
     saveTasks() {
       localStorage.setItem('tasks', JSON.stringify(this.tasks))
     },
